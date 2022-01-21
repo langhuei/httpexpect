@@ -458,10 +458,10 @@ func (r *Response) getJSON(opts ...ContentOpts) interface{} {
 	}
 
 	var value interface{}
-	if err := json.Unmarshal(r.content, &value); err != nil {
-		r.chain.fail(err.Error())
-		return nil
-	}
+	//if err := json.Unmarshal(r.content, &value); err != nil {
+	//	r.chain.fail(err.Error())
+	//	return nil
+	//}
 	decoder := json.NewDecoder(bytes.NewReader(r.content))
 	decoder.UseNumber()
 	decoder.Decode(&value)
