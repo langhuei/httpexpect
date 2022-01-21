@@ -5,7 +5,6 @@ go 1.14
 require (
 	github.com/dgrijalva/jwt-go v3.0.0+incompatible
 	github.com/fasthttp/websocket v1.4.2
-	github.com/gavv/httpexpect v2.0.0+incompatible // indirect
 	github.com/gavv/httpexpect/v2 v2.0.3
 	github.com/gin-gonic/gin v1.5.0
 	github.com/gorilla/websocket v1.4.2
