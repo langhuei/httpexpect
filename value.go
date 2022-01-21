@@ -1,6 +1,7 @@
 package httpexpect
 
 import (
+	"encoding/json"
 	"reflect"
 )
 
@@ -171,6 +172,15 @@ func (v *Value) String() *String {
 			dumpValue(v.value))
 	}
 	return &String{v.chain, data}
+}
+func (v *Value) LongNumber2String() *String {
+	data, ok := v.value.(json.Number)
+	s := data.String()
+	if !ok {
+		v.chain.fail("\nexpected numeric value, but got:\n%s",
+			dumpValue(v.value))
+	}
+	return &String{v.chain, s}
 }
 
 // Number returns a new Number attached to underlying value.
