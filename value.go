@@ -173,15 +173,6 @@ func (v *Value) String() *String {
 	}
 	return &String{v.chain, data}
 }
-func (v *Value) LongNumber2String() *String {
-	data, ok := v.value.(json.Number)
-	s := data.String()
-	if !ok {
-		v.chain.fail("\nexpected numeric value, but got:\n%s",
-			dumpValue(v.value))
-	}
-	return &String{v.chain, s}
-}
 
 // Number returns a new Number attached to underlying value.
 //
@@ -192,12 +183,23 @@ func (v *Value) LongNumber2String() *String {
 //  value := NewValue(t, 123)
 //  value.Number().InRange(100, 200)
 func (v *Value) Number() *Number {
-	data, ok := v.value.(float64)
-	if !ok {
+	data, ok := v.value.(json.Number)
+	f, err := data.Float64()
+	if !ok || err != nil {
 		v.chain.fail("\nexpected numeric value, but got:\n%s",
 			dumpValue(v.value))
 	}
-	return &Number{v.chain, data}
+	return &Number{v.chain, f}
+}
+
+func (v *Value) int64() *Integer {
+	data, ok := v.value.(json.Number)
+	i, err := data.Int64()
+	if !ok || err != nil {
+		v.chain.fail("\nexpected numeric value, but got:\n%s",
+			dumpValue(v.value))
+	}
+	return &Integer{v.chain, i}
 }
 
 // Boolean returns a new Boolean attached to underlying value.

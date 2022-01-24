@@ -101,6 +101,18 @@ func canonNumber(chain *chain, number interface{}) (f float64, ok bool) {
 	return
 }
 
+func canonInteger(chain *chain, integer interface{}) (f int64, ok bool) {
+	ok = true
+	defer func() {
+		if err := recover(); err != nil {
+			chain.fail("%v", err)
+			ok = false
+		}
+	}()
+	f = reflect.ValueOf(integer).Convert(reflect.TypeOf(int64(0))).Int()
+	return
+}
+
 func canonArray(chain *chain, in interface{}) ([]interface{}, bool) {
 	var out []interface{}
 	data, ok := canonValue(chain, in)
