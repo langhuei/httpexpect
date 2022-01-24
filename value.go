@@ -192,7 +192,7 @@ func (v *Value) Number() *Number {
 	return &Number{v.chain, f}
 }
 
-func (v *Value) int64() *Integer {
+func (v *Value) Int64() *Integer {
 	data, ok := v.value.(json.Number)
 	i, err := data.Int64()
 	if !ok || err != nil {
